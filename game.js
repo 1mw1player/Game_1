@@ -1,6 +1,5 @@
 
 
-
 // Get the canvas element from the HTML file
 
 
@@ -21,7 +20,8 @@ let player = {
   y: canvas.height / 2,
   size: 50,
   angle: 0,
-  speed: 5
+  speed: 5,
+  color: 'red' // New property to store the color of the player
 };
 
 // Create a mouse click position variable
@@ -32,12 +32,19 @@ let destroyedPlayers = 0;
 
 // Function to spawn a new player
 function spawnPlayer() {
+  if (destroyedPlayers >= 10) {
+    player.color = 'blue'; // Change the color of the player if the score is 10 or greater
+  } else {
+    player.color = 'red'; // Otherwise, set the color to red
+  }
+  
   player = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     size: 50,
     angle: 0,
-    speed: 5
+    speed: 5,
+    color: player.color // Set the color of the new player object
   };
 }
 
@@ -76,7 +83,8 @@ function render() {
   context.save();
   context.translate(player.x, player.y);
   context.rotate(player.angle);
-  context.fillStyle = 'red';
+  // Draw the player as a red or blue square, depending on the value of player.color
+  context.fillStyle = player.color;
   context.fillRect(-player.size / 2, -player.size / 2, player.size, player.size);
   context.restore();
 
